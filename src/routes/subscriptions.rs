@@ -11,7 +11,7 @@ struct FormData {
 }
 
 #[post("/subscriptions")]
-async fn subscribe(
+pub async fn subscribe(
     form: web::Form<FormData>,
     // Retrieving a connenction from the application state
     pool: web::Data<PgPool>,
