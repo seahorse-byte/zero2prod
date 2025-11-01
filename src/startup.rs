@@ -1,4 +1,5 @@
 use crate::routes::{health_check, subscribe};
+use actix_web::middleware::Logger;
 use actix_web::{App, HttpServer, dev::Server, web};
 use sqlx::PgPool;
 use std::net::TcpListener;
@@ -9,6 +10,7 @@ pub fn run(listener: TcpListener, db_pool: PgPool) -> Result<Server, std::io::Er
 
     let server = HttpServer::new(move || {
         App::new()
+            .wrap(Logger::default())
             .service(health_check)
             .service(subscribe)
             // Get a pointer copy and attach it to the application state
