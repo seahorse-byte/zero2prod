@@ -22,3 +22,10 @@ http://127.0.0.1:8000/subscriptions
 ```
 
 [https://github.com/LukeMathWalker/zero-to-production/](https://github.com/LukeMathWalker/zero-to-production/)
+
+```bash
+# Tests
+TEST_LOG=true cargo test health_check_works | bunyan
+
+TEST_LOG=true cargo test | bunyan
+```
