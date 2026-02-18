@@ -1,8 +1,8 @@
-use actix_web::{HttpResponse, Responder, post, web};
-use chrono::Utc;
-use serde::Deserialize;
+use actix_web::{HttpResponse, post, web};
 use sqlx::PgPool;
 use uuid::Uuid;
+use chrono::Utc;
+use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct FormData {
@@ -14,7 +14,6 @@ pub struct FormData {
     name = "Adding a new subscriber",
     skip(form, pool),
     fields(
-        request_id = %Uuid::new_v4(),
         subscriber_email = %form.email,
         subscriber_name = %form.name
     )
@@ -25,7 +24,7 @@ pub async fn subscribe(
     form: web::Form<FormData>,
     // Retrieving a connenction from the application state
     pool: web::Data<PgPool>,
-) -> impl Responder {
+) -> HttpResponse {
 
     match insert_subscriber(&pool, &form).await {
         Ok(_) => HttpResponse::Ok().finish(),
